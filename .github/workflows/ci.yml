@@ -44,5 +44,5 @@ jobs:
 
       - name: Deploy application
         env:
-          MY_ENV_VARIABLE: ${{ my_variable }}
-        run: echo "Deploying the application $my_variable"  # Commande simulant le déploiement
+          MY_VARIABLE: ${{ MY_VARIABLE }}
+        run: echo "Deploying the application $MY_VARIABLE"  # Commande simulant le déploiement
