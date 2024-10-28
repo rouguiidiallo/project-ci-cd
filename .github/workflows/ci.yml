@@ -1,1 +1,25 @@
+name: CI/CD Pipeline
 
+on:
+  push:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # Utilisation d'une image Docker spécifique pour le job build
+    runs-on: ubuntu-latest
+    container: 
+      image: node:16   # Exemple avec une image Docker Node.js version 16
+      options: --workdir /app  # Définit le dossier de travail dans le conteneur
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build application
+        run: npm run build
