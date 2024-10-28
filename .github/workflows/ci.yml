@@ -1,6 +1,6 @@
 name: CI/CD Pipeline
 
-# Déclencheur : lance le pipeline sur un push ou une pull request vers la branche principale
+# Déclencheur : lance le pipeline sur un push ou vers la branche principale
 on:
   push:
     branches: 
@@ -18,11 +18,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      #- name: Install dependencies
-       # run: npm install
+      # Cacher le fichier CHANGELOG.md entre les jobs
+      - name: Cache CHANGELOG.md
+        uses: actions/cache@v3
+        with:
+          path: CHANGELOG.md  # Chemin du fichier à mettre en cache
+          key: ${{ runner.os }}-changelog-${{ github.sha }}  # Clé de cache unique basée sur le SHA du commit
+          restore-keys: |
+            ${{ runner.os }}-changelog-
 
+      # Exemple de commande pour construire l'application
       - name: Build application
         run: echo "build successful"
+
   # Job pour l'exécution des tests
   test:
     runs-on: ubuntu-latest
@@ -31,8 +39,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Restaurer le cache pour CHANGELOG.md
+      - name: Restore CHANGELOG.md cache
+        uses: actions/cache@v3
+        with:
+          path: CHANGELOG.md
+          key: ${{ runner.os }}-changelog-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-changelog-
+
       - name: Run tests
-        run: echo "Tests succesful..."  # Commande simulant les tests
+        run: echo "Tests successful..."  # Commande simulant les tests
 
   # Job pour le déploiement
   deploy:
@@ -41,6 +58,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      # Restaurer le cache pour CHANGELOG.md
+      - name: Restore CHANGELOG.md cache
+        uses: actions/cache@v3
+        with:
+          path: CHANGELOG.md
+          key: ${{ runner.os }}-changelog-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-changelog-
 
       - name: Deploy application
         env:
