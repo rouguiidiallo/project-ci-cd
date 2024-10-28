@@ -1,6 +1,6 @@
 name: CI/CD Pipeline
 
-# Déclencheur : lance le pipeline sur un push ou vers la branche principale
+# Déclencheur : lance le pipeline sur un push vers la branche principale
 on:
   push:
     branches: 
