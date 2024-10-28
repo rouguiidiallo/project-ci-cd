@@ -1,14 +1,14 @@
 name: CI/CD Pipeline
 
+# Déclencheur : lance le pipeline sur un push ou une pull request vers la branche principale
 on:
   push:
-    branches: [ "main" ]
-  push:
-    branches: [ "main" ]
+    branches: 
+      - main
 
 jobs:
+  # Job pour la construction de l'application
   build:
-    # Utilisation d'une image Docker spécifique pour le job build
     runs-on: ubuntu-latest
     container: 
       image: node:16   # Exemple avec une image Docker Node.js version 16
@@ -23,3 +23,24 @@ jobs:
 
       - name: Build application
         run: npm run build
+  # Job pour l'exécution des tests
+  test:
+    runs-on: ubuntu-latest
+    needs: build   # Exécution après le job de build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run tests
+        run: echo "Running automated tests..."  # Commande simulant les tests
+
+  # Job pour le déploiement
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test   # Exécution après le job de test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy application
+        run: echo "Deploying the application..."  # Commande simulant le déploiement
