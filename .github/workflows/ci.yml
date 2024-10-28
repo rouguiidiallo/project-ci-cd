@@ -43,4 +43,6 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy application
-        run: echo "Deploying the application"  # Commande simulant le déploiement
+        env:
+          my_variable: ${{ my_variable }}
+        run: echo "Deploying the application $my_variable"  # Commande simulant le déploiement
