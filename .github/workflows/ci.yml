@@ -72,3 +72,26 @@ jobs:
         env:
           MY_VARIABLE: ${{ vars.MY_VARIABLE }}
         run: echo "Deploying the application $MY_VARIABLE"  # Commande simulant le déploiement
+
+  # Job de notification par e-mail en cas d'échec
+  notify:
+      if: failure()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.example.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: GitHub Actions Failure Notification
+        to: rouguiya1998@gmail.com
+        from: github-actions@example.com
+        body: |
+          The GitHub Actions workflow has failed.
+          Repository: ${{ github.repository }}
+          Workflow: ${{ github.workflow }}
+          Run ID: ${{ github.run_id }}
+          Job: ${{ github.job }}
+          Commit: ${{ github.sha }}
+          Author: ${{ github.event.head_commit.author.name }}
+          Message: ${{ github.event.head_commit.message }}
+
