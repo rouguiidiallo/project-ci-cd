@@ -1,7 +1,5 @@
-# project-ci-cd
-
-# CI/CD Pipeline Documentation
-
+================================================***ROUGUIYATOU DIALLO***=================================
+# project-ci-cd TP1-4
 Ce dépôt utilise GitHub Actions pour automatiser un pipeline CI/CD avec les étapes de **build**, **test** et **déploiement**. Voici un aperçu des étapes et de leurs fonctions.
 
 ## Pipeline YAML : `.github/workflows/ci.yml`
